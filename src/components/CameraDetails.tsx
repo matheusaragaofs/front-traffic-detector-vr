@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 interface Props {
   cameraId: string;
   street: string;
@@ -7,6 +11,8 @@ interface Props {
   redTime: number;
 }
 
+type TrafficLightStatus = 'red' | 'yellow' | 'green';
+
 const CameraDetails: React.FC<Props> = ({
   cameraId,
   congestionLevel,
@@ -15,6 +21,9 @@ const CameraDetails: React.FC<Props> = ({
   street,
   volume,
 }) => {
+  const [currentTrafficLightStatus, setCurrentTrafficLightStatus] =
+    useState<TrafficLightStatus>('red');
+
   return (
     <div className="w-96 border border-black bg-white  p-5 rounded-lg flex flex-col gap-3">
       <div className="border border-black  h-48 rounded-md flex items-center justify-center">
@@ -28,9 +37,27 @@ const CameraDetails: React.FC<Props> = ({
 
       <div className="flex gap-5">
         <div className="flex gap-2 flex-col bg-slate-600 p-3 rounded-3xl">
-          <div className="h-5 w-5 rounded-full bg-red-500"></div>
-          <div className="h-5 w-5 rounded-full bg-yellow-500"></div>
-          <div className="h-5 w-5 rounded-full bg-green-500"></div>
+          <div
+            style={{
+              backgroundColor:
+                currentTrafficLightStatus === 'red' ? '#ff5b5b' : '#a4a4a4',
+            }}
+            className="h-5 w-5 rounded-full"
+          ></div>
+          <div
+            style={{
+              backgroundColor:
+                currentTrafficLightStatus === 'yellow' ? '#fde52f' : '#a4a4a4',
+            }}
+            className="h-5 w-5 rounded-full"
+          ></div>
+          <div
+            style={{
+              backgroundColor:
+                currentTrafficLightStatus === 'green' ? '#41fd2f' : '#a4a4a4',
+            }}
+            className="h-5 w-5 rounded-full"
+          ></div>
         </div>
         <div>
           <div className="flex gap-3">
