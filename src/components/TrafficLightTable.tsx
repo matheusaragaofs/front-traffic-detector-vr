@@ -39,7 +39,6 @@ export function TrafficLightTable() {
       status: 'Livre',
       volume: '40%',
     },
-
   ];
 
   return (

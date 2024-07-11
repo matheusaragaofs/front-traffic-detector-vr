@@ -1,5 +1,6 @@
 import CameraDetails from '@/components/CameraDetails';
 import { TrafficLightTable } from '@/components/TrafficLightTable';
+import { VolumePerfomanceChart } from '@/components/VolumePerfomanceChart';
 
 export default function Home() {
   return (
@@ -26,7 +27,11 @@ export default function Home() {
             redTime={5}
           />
         </div>
-        <TrafficLightTable />
+
+        <div className="flex gap-10">
+          <TrafficLightTable />
+          <VolumePerfomanceChart />
+        </div>
       </div>
     </main>
   );
