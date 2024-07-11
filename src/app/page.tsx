@@ -1,4 +1,5 @@
 import CameraDetails from '@/components/CameraDetails';
+import { TrafficLightTable } from '@/components/TrafficLightTable';
 
 export default function Home() {
   return (
@@ -7,7 +8,7 @@ export default function Home() {
         <div className="text-white font-bold text-3xl text-left">Dashboard</div>
         <div className="flex gap-10">
           <CameraDetails
-            currentTrafficLightStatus='green'
+            currentTrafficLightStatus="green"
             cameraId="1111111"
             street="Rua 1"
             volume={100}
@@ -16,7 +17,7 @@ export default function Home() {
             redTime={10}
           />
           <CameraDetails
-            currentTrafficLightStatus='red'
+            currentTrafficLightStatus="red"
             cameraId="2222222"
             street="Rua 2"
             volume={200}
@@ -25,6 +26,7 @@ export default function Home() {
             redTime={5}
           />
         </div>
+        <TrafficLightTable />
       </div>
     </main>
   );
