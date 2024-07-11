@@ -2,18 +2,20 @@
 
 import { useState } from 'react';
 
+type TrafficLightStatus = 'red' | 'yellow' | 'green';
+type CongestionLevel = 'Alto' | 'Médio' | 'Baixo';
 interface Props {
   cameraId: string;
   street: string;
   volume: number;
-  congestionLevel: string;
+  congestionLevel: CongestionLevel;
   greenTime: number;
   redTime: number;
+  currentTrafficLightStatus: TrafficLightStatus;
 }
 
-type TrafficLightStatus = 'red' | 'yellow' | 'green';
-
 const CameraDetails: React.FC<Props> = ({
+  currentTrafficLightStatus,
   cameraId,
   congestionLevel,
   greenTime,
@@ -21,13 +23,12 @@ const CameraDetails: React.FC<Props> = ({
   street,
   volume,
 }) => {
-  const [currentTrafficLightStatus, setCurrentTrafficLightStatus] =
-    useState<TrafficLightStatus>('red');
-
   return (
-    <div className="w-96 border border-black bg-white  p-5 rounded-lg flex flex-col gap-3">
-      <div className="border border-black  h-48 rounded-md flex items-center justify-center">
-        Video aqui
+    <div className="w-[35rem] border border-black bg-white  p-5 rounded-lg flex flex-col gap-3">
+      <div className="border rounded-md flex items-center justify-center">
+        <video className="rounded-md" loop autoPlay muted>
+          <source src="/videos/traffic-video.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <div className="flex items-center justify-center flex-col gap-1">
@@ -66,7 +67,19 @@ const CameraDetails: React.FC<Props> = ({
           </div>
           <div className="flex gap-3">
             <div className="font-bold">Nivel de congestionamento:</div>
-            <div>{congestionLevel}</div>
+            <div
+              className="font-bold"
+              style={{
+                color:
+                  congestionLevel === 'Alto'
+                    ? '#ec5858'
+                    : congestionLevel === 'Médio'
+                    ? '#adad00'
+                    : '#108dbe',
+              }}
+            >
+              {congestionLevel}
+            </div>
           </div>
           <div className="flex gap-3">
             <div className="font-bold">Tempo Verde:</div>
