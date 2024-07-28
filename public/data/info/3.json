@@ -1,0 +1,41 @@
+{
+    "3": [
+        {
+            "camera": "1",
+            "name": "Parkhurst Rd by Holloway Rd",
+            "number_vehicles": [
+                10,
+                9,
+                10,
+                9,
+                11,
+                11,
+                10,
+                8,
+                11
+            ],
+            "path": "/home/tnpb/Codes/rv-back/downloaded_videos/3_1_1722108954207879168.mp4",
+            "processed_video_path": "/home/tnpb/Codes/rv-back/processed_videos/3_1_1722108954207879168.mp4",
+            "url": "https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/00001.09605.mp4"
+        },
+        {
+            "camera": "2",
+            "name": "Seven Sisters Rd/Holloway Rd",
+            "number_vehicles": [
+                6,
+                6,
+                6,
+                6,
+                6,
+                7,
+                5,
+                7,
+                7,
+                7
+            ],
+            "path": "/home/tnpb/Codes/rv-back/downloaded_videos/3_2_1722108954207879168.mp4",
+            "processed_video_path": "/home/tnpb/Codes/rv-back/processed_videos/3_2_1722108954207879168.mp4",
+            "url": "https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/00001.09711.mp4"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+.table-row:hover {
+  background-color: lightgray !important;
+  cursor: pointer !important;
+  transition:  all 0.5s !important;
+
+}

@@ -1,0 +1,41 @@
+{
+    "1": [
+        {
+            "camera": "1",
+            "name": "Camberwell New Rd/Brixton Rd",
+            "number_vehicles": [
+                6,
+                4,
+                7,
+                4,
+                7,
+                6,
+                6,
+                6,
+                8
+            ],
+            "path": "/home/tnpb/Codes/rv-back/downloaded_videos/1_1_1722108272693088000.mp4",
+            "processed_video_path": "/home/tnpb/Codes/rv-back/processed_videos/1_1_1722108272693088000.mp4",
+            "url": "https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/00001.04503.mp4"
+        },
+        {
+            "camera": "2",
+            "name": "Harleyford St/Ken Pk Rd",
+            "number_vehicles": [
+                6,
+                9,
+                8,
+                7,
+                10,
+                8,
+                10,
+                10,
+                10,
+                7
+            ],
+            "path": "/home/tnpb/Codes/rv-back/downloaded_videos/1_2_1722108272693088000.mp4",
+            "processed_video_path": "/home/tnpb/Codes/rv-back/processed_videos/1_2_1722108272693088000.mp4",
+            "url": "https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/00001.04332.mp4"
+        }
+    ]
+}

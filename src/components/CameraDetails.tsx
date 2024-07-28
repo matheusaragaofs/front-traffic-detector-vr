@@ -1,39 +1,76 @@
 'use client';
+const path = require('path');
 
-import { useState } from 'react';
+import { CamerasInfo } from '@/app/page';
+import { useEffect, useMemo, useState } from 'react';
+import ReactPlayer from 'react-player';
 
 type TrafficLightStatus = 'red' | 'yellow' | 'green';
 type CongestionLevel = 'Alto' | 'Médio' | 'Baixo';
 interface Props {
-  cameraId: string;
-  street: string;
-  volume: number;
-  congestionLevel: CongestionLevel;
-  greenTime: number;
-  redTime: number;
-  currentTrafficLightStatus: TrafficLightStatus;
+  videoPath: string;
+  cameraInfo?: CamerasInfo;
 }
+const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
+  const mockedData = {
+    congestionLevel: 'Alto',
+    greenTime: 10,
+    redTime: 10,
+    currentTrafficLightStatus: 'red',
+  };
+  const { congestionLevel, greenTime, redTime, currentTrafficLightStatus } =
+    mockedData;
 
-const CameraDetails: React.FC<Props> = ({
-  currentTrafficLightStatus,
-  cameraId,
-  congestionLevel,
-  greenTime,
-  redTime,
-  street,
-  volume,
-}) => {
-  return (
-    <div className="w-[35rem] border border-black bg-white  p-5 rounded-lg flex flex-col gap-3">
-      <div className="border rounded-md flex items-center justify-center">
-        <video className="rounded-md" loop autoPlay muted>
-          <source src="/videos/traffic-video.mp4" type="video/mp4" />
+  const [currentVehiclesCount, setCurrentVehiclesCount] = useState(
+    cameraInfo?.number_vehicles[0]
+  );
+
+  const [currentVehiclesCountIndex, setCurrentVehiclesCountIndex] = useState(0);
+
+  useEffect(() => {
+    if (cameraInfo?.number_vehicles) {
+      const interval = setInterval(() => {
+        setCurrentVehiclesCountIndex((prev) => prev + 1);
+        setCurrentVehiclesCount(
+          cameraInfo?.number_vehicles[currentVehiclesCountIndex]
+        );
+
+        if (
+          currentVehiclesCountIndex ===
+          cameraInfo?.number_vehicles.length - 1
+        ) {
+          setCurrentVehiclesCountIndex(0);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [cameraInfo?.number_vehicles, currentVehiclesCountIndex]);
+
+  const CameraVideo = useMemo(
+    () =>
+      cameraInfo?.number_vehicles && (
+        <video
+          className="rounded-md w-full"
+          loop
+          autoPlay
+          muted
+          key={`${videoPath}`}
+        >
+          <source src={videoPath} type="video/mp4" />
         </video>
+      ),
+    [videoPath]
+  );
+  return (
+    <div className="w-[35rem] border bg-white rounded-lg flex flex-col gap-3">
+      <div className="rounded-md flex items-center justify-center">
+        {CameraVideo}
       </div>
 
       <div className="flex items-center justify-center flex-col gap-1">
-        <div className="text-sm">Câmera: {cameraId}</div>
-        <div>{street}</div>
+        <div className="text-sm">Câmera: {cameraInfo?.camera}</div>
+        <div>{cameraInfo?.name}</div>
       </div>
 
       <div className="flex gap-5">
@@ -63,7 +100,7 @@ const CameraDetails: React.FC<Props> = ({
         <div>
           <div className="flex gap-3">
             <div className="font-bold">Volume:</div>
-            <div>{volume}</div>
+            <div>{currentVehiclesCount}</div>
           </div>
           <div className="flex gap-3">
             <div className="font-bold">Nivel de congestionamento:</div>
@@ -78,16 +115,19 @@ const CameraDetails: React.FC<Props> = ({
                     : '#108dbe',
               }}
             >
-              {congestionLevel}
+              -
+              {/* {congestionLevel} */}
             </div>
           </div>
           <div className="flex gap-3">
             <div className="font-bold">Tempo Verde:</div>
-            <div>{greenTime} segundos </div>
+            {/* <div>{greenTime} segundos </div> */}
+            <div>-</div>
           </div>
           <div className="flex gap-3">
             <div className="font-bold">Tempo vermelho:</div>
-            <div>{redTime} segundos </div>
+            {/* <div>{redTime} segundos </div> */}
+            <div>-</div>
           </div>
         </div>
       </div>
