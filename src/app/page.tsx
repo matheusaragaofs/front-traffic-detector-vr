@@ -4,14 +4,21 @@ import { TrafficLightTable } from '@/components/TrafficLightTable';
 import { VolumePerfomanceChart } from '@/components/VolumePerfomanceChart';
 import { useEffect, useMemo, useState } from 'react';
 import path from 'path';
+import { addAttributesToJson } from '@/utils';
 
 export interface CamerasInfo {
   camera: string;
   name: string;
   number_vehicles: number[];
+  averageVolume: number[];
+  densityLevel: [number, string][];
+  advice: string[];
   path: string;
   processed_video_path: string;
   url: string;
+}
+export interface ExampleJson {
+  [key: number]: CamerasInfo[];
 }
 
 export default function Home() {
@@ -23,7 +30,10 @@ export default function Home() {
       try {
         const response = await fetch(`/data/info/${currentCamerasId}.json`);
         const data = await response.json();
-        setCamerasInfo(data[currentCamerasId]);
+        const formattedData =
+          data && addAttributesToJson(data as ExampleJson, currentCamerasId);
+
+        setCamerasInfo(formattedData[currentCamerasId]);
       } catch (error) {
         setCamerasInfo(null);
       }
@@ -31,7 +41,6 @@ export default function Home() {
 
     loadInfo();
   }, [currentCamerasId]);
-
   const FirstCamera = useMemo(() => {
     const pathFirstCamera = path.join(
       'data',
@@ -63,7 +72,7 @@ export default function Home() {
   }, [camerasInfo, currentCamerasId]);
 
   return (
-    <main className="bg-slate-800 flex min-h-screen flex-col items-center gap-10 p-24">
+    <main className="bg-slate-800 flex min-h-screen flex-col items-center gap-10 p-6">
       <div className="flex flex-col gap-5">
         <div className="text-white font-bold text-3xl text-left">Dashboard</div>
 
@@ -83,7 +92,10 @@ export default function Home() {
             setCurrentCamerasId={setCurrentCamerasId}
             currentCamerasId={currentCamerasId}
           />
-          <VolumePerfomanceChart />
+          <VolumePerfomanceChart
+            numberOfVehiclesCamera1={camerasInfo ? camerasInfo[0].number_vehicles : undefined}
+            numberOfVehiclesCamera2={camerasInfo ? camerasInfo[1].number_vehicles : undefined}
+          />
         </div>
       </div>
     </main>

@@ -1,29 +1,31 @@
 'use client';
-const path = require('path');
-
 import { CamerasInfo } from '@/app/page';
 import { useEffect, useMemo, useState } from 'react';
-import ReactPlayer from 'react-player';
 
-type TrafficLightStatus = 'red' | 'yellow' | 'green';
-type CongestionLevel = 'Alto' | 'Médio' | 'Baixo';
 interface Props {
   videoPath: string;
   cameraInfo?: CamerasInfo;
 }
-const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
-  const mockedData = {
-    congestionLevel: 'Alto',
-    greenTime: 10,
-    redTime: 10,
-    currentTrafficLightStatus: 'red',
-  };
-  const { congestionLevel, greenTime, redTime, currentTrafficLightStatus } =
-    mockedData;
 
+const jamLevelsColor = {
+  1: '#108dbe',
+  2: '#adad00',
+  3: '#f09116',
+  4: '#ec5858',
+};
+const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
   const [currentVehiclesCount, setCurrentVehiclesCount] = useState(
     cameraInfo?.number_vehicles[0]
   );
+
+  const [currentInstruction, setCurrentInstruction] = useState(
+    cameraInfo?.advice[0]
+  );
+  const [currentDensityLevel, setCurrentDensityLevel] = useState(
+    cameraInfo?.densityLevel[0][0]
+  );
+  const [currentDensityLevelDescription, setCurrentDensityLevelDescription] =
+    useState(cameraInfo?.densityLevel[0][1]);
 
   const [currentVehiclesCountIndex, setCurrentVehiclesCountIndex] = useState(0);
 
@@ -33,6 +35,13 @@ const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
         setCurrentVehiclesCountIndex((prev) => prev + 1);
         setCurrentVehiclesCount(
           cameraInfo?.number_vehicles[currentVehiclesCountIndex]
+        );
+        setCurrentInstruction(cameraInfo?.advice[currentVehiclesCountIndex]);
+        setCurrentDensityLevel(
+          cameraInfo?.densityLevel[currentVehiclesCountIndex][0]
+        );
+        setCurrentDensityLevelDescription(
+          cameraInfo?.densityLevel[currentVehiclesCountIndex][1]
         );
 
         if (
@@ -51,7 +60,7 @@ const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
     () =>
       cameraInfo?.number_vehicles && (
         <video
-          className="rounded-md w-full"
+          className="rounded-md w-full h-[20rem] p-2 "
           loop
           autoPlay
           muted
@@ -73,30 +82,7 @@ const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
         <div>{cameraInfo?.name}</div>
       </div>
 
-      <div className="flex gap-5">
-        <div className="flex gap-2 flex-col bg-slate-600 p-3 rounded-3xl">
-          <div
-            style={{
-              backgroundColor:
-                currentTrafficLightStatus === 'red' ? '#ff5b5b' : '#a4a4a4',
-            }}
-            className="h-5 w-5 rounded-full"
-          ></div>
-          <div
-            style={{
-              backgroundColor:
-                currentTrafficLightStatus === 'yellow' ? '#fde52f' : '#a4a4a4',
-            }}
-            className="h-5 w-5 rounded-full"
-          ></div>
-          <div
-            style={{
-              backgroundColor:
-                currentTrafficLightStatus === 'green' ? '#41fd2f' : '#a4a4a4',
-            }}
-            className="h-5 w-5 rounded-full"
-          ></div>
-        </div>
+      <div className="flex gap-5 p-5">
         <div>
           <div className="flex gap-3">
             <div className="font-bold">Volume:</div>
@@ -108,26 +94,21 @@ const CameraDetails: React.FC<Props> = ({ videoPath, cameraInfo }) => {
               className="font-bold"
               style={{
                 color:
-                  congestionLevel === 'Alto'
-                    ? '#ec5858'
-                    : congestionLevel === 'Médio'
-                    ? '#adad00'
-                    : '#108dbe',
+                  jamLevelsColor[
+                    currentDensityLevel as keyof typeof jamLevelsColor
+                  ],
               }}
             >
-              -
-              {/* {congestionLevel} */}
+              {currentDensityLevelDescription}
             </div>
           </div>
           <div className="flex gap-3">
-            <div className="font-bold">Tempo Verde:</div>
-            {/* <div>{greenTime} segundos </div> */}
-            <div>-</div>
-          </div>
-          <div className="flex gap-3">
-            <div className="font-bold">Tempo vermelho:</div>
-            {/* <div>{redTime} segundos </div> */}
-            <div>-</div>
+            <div className="font-bold">Instrução:</div>
+            <div>
+              {currentInstruction
+                ? currentInstruction
+                : cameraInfo?.advice[cameraInfo?.advice.length - 1]}
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,33 @@
+{
+    "4": [
+        {
+            "name": "Marylebone Rd/Osnaburgh St",
+            "camera": "1",
+            "url": "https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/00001.07364.mp4",
+            "path": "/home/matheus/Desktop/traffic-project-vr/back-end-traffic-dectector-vr/downloaded_videos/4_1.mp4",
+            "processed_video_path": "/home/matheus/Desktop/traffic-project-vr/front-end-traffic-detector-vr/public/data/cameras/4/4_1.mp4",
+            "number_vehicles": [
+                0,
+                0
+            ]
+        },
+        {
+            "name": "Marylebone Rd/Great Portland Street",
+            "camera": "2",
+            "url": "https://s3-eu-west-1.amazonaws.com/jamcams.tfl.gov.uk/00001.07391.mp4",
+            "path": "/home/matheus/Desktop/traffic-project-vr/back-end-traffic-dectector-vr/downloaded_videos/4_2.mp4",
+            "processed_video_path": "/home/matheus/Desktop/traffic-project-vr/front-end-traffic-detector-vr/public/data/cameras/4/4_2.mp4",
+            "number_vehicles": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    ]
+}
